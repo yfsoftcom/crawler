@@ -1,4 +1,7 @@
-class UnknownParser(object):
+from lxml import etree
+from dataset.data import Data
+import re
+class DefaultParser(object):
     def __init__(self):
         self._page = 1
     
@@ -12,4 +15,5 @@ class UnknownParser(object):
         return None
 
     def parse(self, url, html):
-        return None, None
+        dom = etree.HTML(html)
+        return self._get_new_urls(url, dom), self._get_new_data(dom), self._get_next_page_url(dom)

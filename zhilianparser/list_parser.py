@@ -1,12 +1,13 @@
 from lxml import etree
 from dataset.data import Data
+from default_parser import DefaultParser
 import re
-class ListParser(object):
+class ListParser(DefaultParser):
     def __init__(self):
         self._page = 1
     
     def _get_new_urls(self, page_url, dom):
-        new_urls = set()
+        new_urls = []
         try:
             nodes = dom.xpath("//a[starts-with(@href, 'http://company.zhaopin.com/CC')]/@href")
             if nodes is None:
@@ -15,13 +16,13 @@ class ListParser(object):
                 if node in new_urls:
                     continue
                 else:
-                    new_urls.add(node)
+                    new_urls.append(node)
         except Exception as e:
             print(str(e))
         return new_urls
 
     def _get_new_data(self, dom):
-        new_datas = set()
+        new_datas = []
         try:
             nodes = dom.xpath("//a[starts-with(@href, 'http://company.zhaopin.com/CC')]")
             if nodes is None:
@@ -34,13 +35,16 @@ class ListParser(object):
                 if d in new_datas:
                     continue
                 else:
-                    new_datas.add(d)
+                    new_datas.append(d)
         except Exception as e:
             print(str(e))
         return new_datas
 
     def _get_next_page_url(self, dom):
-        pass
+        next_page_url = dom.xpath("//a[@class='next-page']/@href")
+        if len(next_page_url) < 1:
+            return None
+        return next_page_url[0]
 
     def parse(self, url, html):
         dom = etree.HTML(html)

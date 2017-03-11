@@ -1,7 +1,11 @@
 # main function
+# import sys  
+# reload(sys)  
+# sys.setdefaultencoding('gbk')
+
 from dataset.dataset import Dataset
 from downloader.downloader import Downloader
-from xmlparser.strategy import Strategy
+from zhilianparser.strategy import Strategy
 from url_manager.url_manager import UrlManager
 class Spider(object):
     def __init__(self):
@@ -19,10 +23,11 @@ class Spider(object):
                 url = self.url_manager.next()
                 html = self.downloader.download(url)
                 parser = self.strategy.get_strategy(url)
-                new_urls, data = parser.parse(url, html)
-                #self.url_manager.add_all(new_urls)
+                new_urls, data, next_page_url = parser.parse(url, html)
+                self.url_manager.add(next_page_url)
+                self.url_manager.add_all(new_urls)
                 self.dataset.insert(data)
-                if(self.counter > 1000):
+                if(self.counter > 100):
                     break
                 self.counter = self.counter + 1
 
