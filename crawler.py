@@ -21,5 +21,5 @@ class Spider:
         for item in items:
             print item[0],item[1],item[2],item[3],item[4]
  
-spider = Spider()
-spider.getContents(1)
+#spider = Spider()
+#spider.getContents(1)

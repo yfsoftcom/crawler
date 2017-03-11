@@ -1,6 +1,7 @@
 from lxml import etree
-import data
-class SimpleParser(object):
+from dataset.data import Data
+import re
+class ListParser(object):
     def __init__(self):
         self._page = 1
     
@@ -9,7 +10,7 @@ class SimpleParser(object):
         try:
             nodes = dom.xpath("//a[starts-with(@href, 'http://company.zhaopin.com/CC')]/@href")
             if nodes is None:
-                return new_datas
+                return new_urls
             for node in nodes:
                 if node in new_urls:
                     continue
@@ -26,9 +27,9 @@ class SimpleParser(object):
             if nodes is None:
                 return new_datas
             for node in nodes:
-                d = data.Data()
+                d = Data()
                 d.set('name', node.text)
-                d.set('id', node.text)
+                d.set('id', re.search(r'\d+', node.get('href')).group())
                 d.set('url', node.get('href'))
                 if d in new_datas:
                     continue
@@ -39,8 +40,8 @@ class SimpleParser(object):
         return new_datas
 
     def _get_next_page_url(self, dom):
-        return None
+        pass
 
     def parse(self, url, html):
         dom = etree.HTML(html)
-        return self._get_new_urls(url, dom), self._get_new_data(dom)
+        return self._get_new_urls(url, dom), self._get_new_data(dom), self._get_next_page_url(dom)

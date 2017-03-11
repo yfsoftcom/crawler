@@ -1,12 +1,14 @@
 # main function
-import dataset, downloader, parser, urlmanager
+from dataset.dataset import Dataset
+from downloader.downloader import Downloader
+from xmlparser.strategy import Strategy
+from url_manager.url_manager import UrlManager
 class Spider(object):
     def __init__(self):
-        self.url_manager = urlmanager.UrlManager()
-        self.downloader = downloader.Downloader()
-        self.parser = parser.SimpleParser()
-
-        self.dataset = dataset.Dataset()
+        self.url_manager = UrlManager()
+        self.downloader = Downloader()
+        self.strategy = Strategy()
+        self.dataset = Dataset()
         self.counter = 0
 
     def run(self, root):
@@ -16,7 +18,8 @@ class Spider(object):
             try:
                 url = self.url_manager.next()
                 html = self.downloader.download(url)
-                new_urls, data = self.parser.parse(url, html)
+                parser = self.strategy.get_strategy(url)
+                new_urls, data = parser.parse(url, html)
                 #self.url_manager.add_all(new_urls)
                 self.dataset.insert(data)
                 if(self.counter > 1000):

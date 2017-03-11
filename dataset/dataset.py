@@ -1,5 +1,5 @@
 # dataset
-
+import json
 class Dataset(object):
     def __init__(self):
         self.datas = set()
@@ -10,4 +10,4 @@ class Dataset(object):
 
     def output(self):
         for data in self.datas:
-            data.toString()
+            print data.__str__()
