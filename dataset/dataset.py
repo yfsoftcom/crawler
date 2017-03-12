@@ -23,9 +23,26 @@ class Dataset(object):
     def get_json(self):
         json_str = dict()
         for data in self.datas.values():
-            json_str[data.get('id')] = data.get_dict()
+            d = data.get_dict()
+            d['refid'] = d['id']
+            d['src'] = 'zhilian'
+            d['company'] = d['name']
+            del(d['id'])
+            json_str[d['refid']] = d
+            
         return json.dumps(json_str, ensure_ascii = False)
         
+    def get_list(self):
+        json_str = list()
+        for data in self.datas.values():
+            d = data.get_dict()
+            d['refid'] = d['id']
+            d['src'] = 'zhilian'
+            d['company'] = d['name']
+            del(d['id'])
+            json_str.append(d)
+        return json_str
+
     def store(self):
         f = open('data.json', 'w')
         f.write(self.get_json())

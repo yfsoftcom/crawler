@@ -7,12 +7,14 @@ from dataset.dataset import Dataset
 from downloader.downloader import Downloader
 from zhilianparser.strategy import Strategy
 from url_manager.url_manager import UrlManager
+from fpm_lib.fpm_lib import FpmLib
 class Spider(object):
     def __init__(self):
         self.url_manager = UrlManager()
         self.downloader = Downloader()
         self.strategy = Strategy()
         self.dataset = Dataset()
+        self.fpm_lib = FpmLib()
         self.counter = 0
 
     def run(self, root):
@@ -34,7 +36,10 @@ class Spider(object):
             except Exception as e:
                 print(str(e))
         
-        print self.dataset.get_json()
+        # print self.dataset.get_json()
+        # print self.dataset.get_list()
+        print self.fpm_lib.call_func('commom.create', {'table': 'ss_company', 'row': self.dataset.get_list()[0]})
+        # print self.fpm_lib.call_func('system.show', {'table':'123'})
 
 if __name__ == '__main__':
     spider = Spider()
