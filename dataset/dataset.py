@@ -20,6 +20,14 @@ class Dataset(object):
             for data in datas:
                 self.add(data)
 
-    def output(self):
+    def get_json(self):
+        json_str = dict()
         for data in self.datas.values():
-            print str(data)
+            json_str[data.get('id')] = data.get_dict()
+        return json.dumps(json_str, ensure_ascii = False)
+        
+    def store(self):
+        f = open('data.json', 'w')
+        f.write(self.get_json())
+        f.close()
+        

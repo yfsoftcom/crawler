@@ -13,8 +13,9 @@ class Data(object):
         return self._data.keys()
     def to_json(self):
         return self.__str__()
+    def get_dict(self):
+        return self._data
     def __str__(self):
-        print self._data
-        return json.dumps(self._data, ensure_ascii = True)
+        return json.dumps(self._data, ensure_ascii = False)
     def __eq__(self, another):
         return self.get('id') == another.get('id')

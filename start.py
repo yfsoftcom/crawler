@@ -1,7 +1,7 @@
 # main function
-# import sys  
-# reload(sys)  
-# sys.setdefaultencoding('gbk')
+import sys  
+reload(sys)  
+sys.setdefaultencoding('utf8')  
 
 from dataset.dataset import Dataset
 from downloader.downloader import Downloader
@@ -34,7 +34,7 @@ class Spider(object):
             except Exception as e:
                 print(str(e))
         
-        self.dataset.output()
+        print self.dataset.get_json()
 
 if __name__ == '__main__':
     spider = Spider()
