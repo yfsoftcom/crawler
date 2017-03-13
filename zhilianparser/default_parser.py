@@ -1,4 +1,4 @@
-from lxml import etree
+﻿from lxml import etree
 from dataset.data import Data
 import re
 class DefaultParser(object):

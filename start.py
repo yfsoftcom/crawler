@@ -1,3 +1,4 @@
+﻿# -*- coding: utf-8 -*-
 # main function
 import sys  
 reload(sys)  
@@ -36,9 +37,10 @@ class Spider(object):
             except Exception as e:
                 print(str(e))
         
-        # print self.dataset.get_json()
+        self.dataset.store()
+        print self.dataset.get_json()
         # print self.dataset.get_list()
-        print self.fpm_lib.call_func('commom.create', {'table': 'ss_company', 'row': self.dataset.get_list()[0]})
+        # print self.fpm_lib.call_func('commom.create', {'table': 'ss_company', 'row': self.dataset.get_list()[0]})
         # print self.fpm_lib.call_func('system.show', {'table':'123'})
 
 if __name__ == '__main__':
