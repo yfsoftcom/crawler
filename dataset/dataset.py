@@ -19,6 +19,8 @@ class Dataset(object):
         if datas is None:
             return
         if type(datas) != type([]):
+            if(datas.get('id') is None):
+                return
             self.add(datas)
         else:
             for data in datas:
@@ -28,10 +30,11 @@ class Dataset(object):
         json_str = dict()
         for data in self.datas.values():
             d = data.get_dict()
+            print d
             d['refid'] = d['id']
             d['src'] = 'zhilian'
             d['company'] = d['name']
-            del(d['id'])
+            del d['id']
             json_str[d['refid']] = d
             
         return json.dumps(json_str, ensure_ascii = False)
