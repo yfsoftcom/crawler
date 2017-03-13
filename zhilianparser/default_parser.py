@@ -16,4 +16,16 @@ class DefaultParser(object):
 
     def parse(self, url, html):
         dom = etree.HTML(html)
-        return self._get_new_urls(url, dom), self._get_new_data(dom), self._get_next_page_url(dom)
+        data = self._get_new_data(dom)
+        urls = self._get_new_urls(url, dom)
+        next_page = self._get_next_page_url(dom)
+        return urls, data, next_page
+
+    def _get_children_text(self, nodes):
+        text = ''
+        for node in nodes:
+            if isinstance(node, etree._ElementUnicodeResult):
+                text = text + node
+        return text
+
+    

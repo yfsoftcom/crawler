@@ -6,23 +6,30 @@ import re
 class CompanyParser(DefaultParser):
     def _get_new_data(self, dom):
         try:
-            addr = dom.xpath("//span[@class='comAddress']")
-            if len(addr) < 1:
+            # get addr
+            nodes = dom.xpath("//span[@class='comAddress']")
+            if len(nodes) < 1:
                 return None
-            addr = addr[0].text
+            addr = nodes[0].text
             if addr is None:
                 return None
             data = Data()
-            # addr = re.sub(r'\(', ' ', addr )
-            # addr = re.sub(r'\)', ' ', addr )
-            # addr = re.sub(r'\s{2,}', ',', addr )
-            # print addr
             data.set('addr', addr)
 
-            url = dom.xpath("//link[@rel='canonical']/@href")
-            if url is None:
+            # get detail
+            nodes = dom.xpath("//div[@class='company-content']/node()")
+            if len(nodes) < 1:
                 return None
-            url = url[0]
+            detail = self._get_children_text(nodes)
+            if detail is None:
+                return None
+            data.set('detail', detail)
+
+            # get id
+            nodes = dom.xpath("//link[@rel='canonical']/@href")
+            if len(nodes) < 1:
+                return None
+            url = nodes[0]
             id = re.search(r'\d+', url).group()
             data.set('id', id)
         except Exception as e:

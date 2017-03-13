@@ -46,3 +46,4 @@ class Spider(object):
 if __name__ == '__main__':
     spider = Spider()
     spider.run('http://sou.zhaopin.com/jobs/searchresult.ashx?bj=160000&in=210500%3B160400%3B160000%3B160200%3B160600&jl=%E6%89%AC%E5%B7%9E&p=1&isadv=0')
+    # spider.run('http://company.zhaopin.com/CC435961783.htm')

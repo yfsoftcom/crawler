@@ -17,13 +17,13 @@ class Dataset(object):
     def insert(self, datas):
         if datas is None:
             return
-        if type(datas) != type([]):
+        if isinstance(datas, list):
+            for data in datas:
+                self.add(data)
+        else:
             if datas.get('id') is None:
                 return
             self.add(datas)
-        else:
-            for data in datas:
-                self.add(data)
 
     def get_json(self):
         json_str = dict()

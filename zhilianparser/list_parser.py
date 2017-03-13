@@ -7,6 +7,9 @@ class ListParser(DefaultParser):
         self._page = 1
         self._new_urls = []
     
+    def _get_new_urls(self, page_url, dom):
+        return self._new_urls
+
     def _get_new_data(self, dom):
         new_datas = []
         try:
@@ -33,8 +36,3 @@ class ListParser(DefaultParser):
         if len(next_page_url) < 1:
             return None
         return next_page_url[0]
-
-    def parse(self, url, html):
-        dom = etree.HTML(html)
-        datas = self._get_new_data(dom)
-        return self._new_urls, datas, self._get_next_page_url(dom)
