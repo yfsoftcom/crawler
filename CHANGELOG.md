@@ -2,3 +2,4 @@
 
 - debug text encode
 - ignore data.json
+- add zhilian data spider
