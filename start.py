@@ -29,6 +29,8 @@ class Spider(object):
                 new_urls, data, next_page_url = parser.parse(url, html)
                 self.url_manager.add(next_page_url)
                 self.url_manager.add_all(new_urls)
+                # filter data
+                data = parser._filter(data)
                 self.dataset.insert(data)
                 if(self.counter > 100):
                     break
@@ -38,10 +40,9 @@ class Spider(object):
                 print(str(e))
         
         # self.dataset.store()
-        # print self.dataset.get_json()
-        # print self.dataset.get_list()
-        print self.fpm_lib.call_func('common.create', {'table': 'ss_company', 'row': self.dataset.get_list()})
-        # print self.fpm_lib.call_func('system.show', {'table':'123'})
+        row = self.dataset.get_list()
+        row = self.strategy.validate(row)
+        print self.fpm_lib.call_func('common.create', {'table': 'ss_company', 'row': row})
 
 if __name__ == '__main__':
     spider = Spider()

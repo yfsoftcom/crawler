@@ -18,10 +18,7 @@ class CompanyParser(DefaultParser):
 
             # get detail
             nodes = dom.xpath("//div[@class='company-content']")
-            if len(nodes) < 1:
-                return None
-            detail = nodes[0].xpath('string(.)')
-            detail = self._remove_white_space(detail)
+            detail = self._get_children_text(nodes)
             if detail is None:
                 return None
             data.set('detail', detail)
@@ -36,3 +33,7 @@ class CompanyParser(DefaultParser):
         except Exception as e:
             print(str(e))
         return data
+
+
+    def _filter(self, datas):
+        return datas

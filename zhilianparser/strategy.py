@@ -12,3 +12,9 @@ class Strategy(object):
     if re.match(r'^http://company.zhaopin.com/', url) != None:
       return CompanyParser()
     return UnknownParser()
+
+  def _filter(self, input):
+    return 'addr' in input.keys()
+
+  def validate(self, dataset):
+    return filter(self._filter ,dataset)
