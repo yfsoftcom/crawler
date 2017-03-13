@@ -22,10 +22,25 @@ class DefaultParser(object):
         return urls, data, next_page
 
     def _get_children_text(self, nodes):
-        text = ''
-        for node in nodes:
-            if isinstance(node, etree._ElementUnicodeResult):
-                text = text + node
-        return text
+        # if isinstance(nodes, list):
+        #     if len(nodes) < 1:
+        #         return ''
+        # text = ''
+        # for node in nodes:
+        #     print node.xpath('string(.)')
+        #     if isinstance(node, etree._ElementUnicodeResult):
+        #         text = text + node
+        #     elif isinstance(node, etree._ElementStringResult):
+        #         #print node.xpath('string(.)')
+        #     elif isinstance(node, etree._Element):
+        #         print node.xpath('string(.)')
+        #     else:
+        #         print type(node)
+        # return self._remove_white_space(text)
+        return ''
 
+    def _remove_white_space(self, text):
+        text = re.sub(r'\s', '', text)
+        #text = re.sub(r'\\r\\n', '', text)
+        return text
     

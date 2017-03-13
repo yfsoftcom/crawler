@@ -17,10 +17,11 @@ class CompanyParser(DefaultParser):
             data.set('addr', addr)
 
             # get detail
-            nodes = dom.xpath("//div[@class='company-content']/node()")
+            nodes = dom.xpath("//div[@class='company-content']")
             if len(nodes) < 1:
                 return None
-            detail = self._get_children_text(nodes)
+            detail = nodes[0].xpath('string(.)')
+            detail = self._remove_white_space(detail)
             if detail is None:
                 return None
             data.set('detail', detail)
