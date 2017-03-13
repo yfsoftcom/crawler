@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 # main function
-import sys  
-reload(sys)  
-sys.setdefaultencoding('utf8')  
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 from dataset.dataset import Dataset
 from downloader.downloader import Downloader
