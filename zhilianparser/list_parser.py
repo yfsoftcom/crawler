@@ -5,21 +5,6 @@ import re
 class ListParser(DefaultParser):
     def __init__(self):
         self._page = 1
-    
-    def _get_new_urls(self, page_url, dom):
-        new_urls = []
-        try:
-            nodes = dom.xpath("//a[starts-with(@href, 'http://company.zhaopin.com/CC')]/@href")
-            if nodes is None:
-                return new_urls
-            for node in nodes:
-                if node in new_urls:
-                    continue
-                else:
-                    new_urls.append(node)
-        except Exception as e:
-            print(str(e))
-        return new_urls
 
     def _get_new_data(self, dom):
         new_datas = []

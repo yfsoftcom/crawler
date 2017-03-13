@@ -5,23 +5,23 @@ from default_parser import DefaultParser
 import re
 class CompanyParser(DefaultParser):
     def _get_new_data(self, dom):
-        data = Data()
         try:
             addr = dom.xpath("//span[@class='comAddress']")
             if len(addr) < 1:
-                return data
+                return None
             addr = addr[0].text
             if addr is None:
-                return data
+                return None
+            data = Data()
             # addr = re.sub(r'\(', ' ', addr )
             # addr = re.sub(r'\)', ' ', addr )
             # addr = re.sub(r'\s{2,}', ',', addr )
-            print addr
+            # print addr
             data.set('addr', addr)
 
             url = dom.xpath("//link[@rel='canonical']/@href")
             if url is None:
-                return data
+                return None
             url = url[0]
             id = re.search(r'\d+', url).group()
             data.set('id', id)

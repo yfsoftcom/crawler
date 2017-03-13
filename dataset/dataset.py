@@ -5,6 +5,8 @@ class Dataset(object):
         self.datas = {}
 
     def add(self, data):
+        if data is None:
+            return
         if data.get('id') is None:
             return
         if data.get('id') in self.datas:
@@ -14,6 +16,8 @@ class Dataset(object):
             self.datas[data.get('id')] = data
 
     def insert(self, datas):
+        if datas is None:
+            return
         if type(datas) != type([]):
             self.add(datas)
         else:
