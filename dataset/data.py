@@ -11,6 +11,8 @@ class Data(object):
         self._data[key] = val
     def keys(self):
         return self._data.keys()
+    def update(self, data):
+        self._data.update(data.get_dict())
     def to_json(self):
         return self.__str__()
     def get_dict(self):

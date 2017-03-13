@@ -9,9 +9,8 @@ class Dataset(object):
             return
         if data.get('id') is None:
             return
-        if data.get('id') in self.datas:
-            for k in data.keys():
-                self.datas[data.get('id')].set(k, data.get(k))
+        if data.get('id') in self.datas.keys():
+            self.datas[data.get('id')].update(data)
         else:
             self.datas[data.get('id')] = data
 
@@ -19,7 +18,7 @@ class Dataset(object):
         if datas is None:
             return
         if type(datas) != type([]):
-            if(datas.get('id') is None):
+            if datas.get('id') is None:
                 return
             self.add(datas)
         else:
@@ -30,7 +29,6 @@ class Dataset(object):
         json_str = dict()
         for data in self.datas.values():
             d = data.get_dict()
-            print d
             d['refid'] = d['id']
             d['src'] = 'zhilian'
             d['company'] = d['name']
@@ -46,7 +44,7 @@ class Dataset(object):
             d['refid'] = d['id']
             d['src'] = 'zhilian'
             d['company'] = d['name']
-            del(d['id'])
+            del d['id']
             json_str.append(d)
         return json_str
 
