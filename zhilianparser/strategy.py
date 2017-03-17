@@ -1,5 +1,5 @@
 import re
-from list_parser import ListParser
+from company_list_parser import ListParser
 from company_parser import CompanyParser
 from unknown_parser import UnknownParser
 class Strategy(object):
