@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from lxml import etree
 from dataset.data import Data
-from default_parser import DefaultParser
+from strategy.parser.default_parser import DefaultParser
 import re
 class CompanyParser(DefaultParser):
     def _get_new_data(self, dom):
@@ -13,7 +13,7 @@ class CompanyParser(DefaultParser):
             addr = nodes[0].text
             if addr is None:
                 return None
-            data = Data()
+            data = Data('ss_company')
             data.set('addr', addr)
 
             # get detail
@@ -32,8 +32,4 @@ class CompanyParser(DefaultParser):
             data.set('id', id)
         except Exception as e:
             print(str(e))
-        return data
-
-
-    def _filter(self, datas):
-        return datas
+        return [data]

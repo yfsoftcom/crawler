@@ -1,6 +1,10 @@
-﻿from lxml import etree
+from lxml import etree
 from dataset.data import Data
+from downloader.downloader import Downloader
 import re
+
+downloader = Downloader()
+
 class DefaultParser(object):
     def __init__(self):
         self._page = 1
@@ -14,7 +18,8 @@ class DefaultParser(object):
     def _get_next_page_url(self, dom):
         return None
 
-    def parse(self, url, html):
+    def parse(self, url):
+        html = downloader.download(url)
         dom = etree.HTML(html)
         data = self._get_new_data(dom)
         urls = self._get_new_urls(url, dom)

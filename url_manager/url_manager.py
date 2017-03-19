@@ -1,28 +1,19 @@
+from single_url_manager import SingleUrlManager
 
 class UrlManager(object):
-    def __init__(self):
-        self.new_urls = []
-        self.old_urls = []
+  def __init__(self):
+    self.domains = {}
+    self.current_domain = 'Default'
 
-    def add(self, url):
-        if url is None:
-            return
-        if url in self.old_urls:
-            return 
-        if url in self.new_urls:
-            return 
-        self.new_urls.append(url)
-
-    def add_all(self, urls):
-        if urls is None:
-            return
-        for url in urls:
-            self.add(url)
-
-    def has_next(self):
-        return len(self.new_urls) > 0
-
-    def next(self):
-        url = self.new_urls.pop()
-        self.old_urls.append(url)
-        return url
+  def set_domain(self, domain):
+    self.current_domain = domain
+    if domain in self.domains.keys():
+      return
+    self.domains[domain] = SingleUrlManager()
+ 
+  def get_manager(self, domain = 'Default'):
+    d = self.current_domain
+    if domain != 'Default':
+      d = domain
+    self.set_domain(d)
+    return self.domains[d]

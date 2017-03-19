@@ -1,6 +1,6 @@
 ﻿from lxml import etree
 from dataset.data import Data
-from default_parser import DefaultParser
+from strategy.parser.default_parser import DefaultParser
 import re
 class ListParser(DefaultParser):
     def __init__(self):
@@ -13,11 +13,12 @@ class ListParser(DefaultParser):
     def _get_new_data(self, dom):
         new_datas = []
         try:
+            # company
             nodes = dom.xpath("//a[starts-with(@href, 'http://company.zhaopin.com/CC')]")
             if nodes is None:
                 return new_datas
             for node in nodes:
-                d = Data()
+                d = Data('ss_company')
                 d.set('name', node.text)
                 d.set('id', re.search(r'\d+', node.get('href')).group())
                 url = node.get('href')
@@ -27,6 +28,11 @@ class ListParser(DefaultParser):
                 else:
                     self._new_urls.append(url) # append the url
                     new_datas.append(d)
+            # jobs
+            nodes = dom.xpath("//a[starts-with(@href, 'http://jobs.zhaopin.com/')]")
+            for node in nodes:
+                url = node.get('href')
+                self._new_urls.append(url) # append the jobs url
         except Exception as e:
             print(str(e))
         return new_datas
