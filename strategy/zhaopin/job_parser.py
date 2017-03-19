@@ -19,8 +19,9 @@ class JobParser(DefaultParser):
                 return None
             company = nodes[0].text
 
+            
             # get scale
-            nodes = dom.xpath("//div[@class='terminalpage']//ul[@class='terminal-ul']/li[1]/strong")
+            nodes = dom.xpath("//div[@class='terminalpage-left']//ul[1]/li[1]/strong")
             if len(nodes) < 1:
                 return None
             scale = nodes[0].text

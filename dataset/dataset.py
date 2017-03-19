@@ -33,9 +33,12 @@ class Dataset(object):
         print 'store'
 
     def output(self):
+        # print self.datas.keys()
         for datas in self.datas.values():
             for data in datas.values():
                 print data
+
+
     # def add(self, data):
     #     if data is None:
     #         return
