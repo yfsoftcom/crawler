@@ -20,7 +20,7 @@ class ListParser(DefaultParser):
             for node in nodes:
                 d = Data('ss_company')
                 d.set('name', node.text)
-                d.set('id', re.search(r'\d+', node.get('href')).group())
+                d.set('refid', re.search(r'\d+', node.get('href')).group())
                 url = node.get('href')
                 d.set('url', url)
                 if d in new_datas:

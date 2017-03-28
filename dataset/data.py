@@ -33,4 +33,4 @@ class Data(object):
         return json.dumps(self._data, ensure_ascii = False)
         
     def __eq__(self, another):
-        return self.get('id') == another.get('id') and self.get_class_name() == another.get_class_name()
+        return self.get('refid') == another.get('refid') and self.get_class_name() == another.get_class_name()

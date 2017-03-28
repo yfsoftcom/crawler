@@ -42,7 +42,7 @@ class JobParser(DefaultParser):
             data.set('company', company)
             data.set('scale', scale)
             data.set('detail', detail)
-            data.set('id', id)
+            data.set('refid', id)
             return [data]
 
         except Exception as e:

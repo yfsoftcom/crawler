@@ -34,3 +34,4 @@ class BaseSpider(object):
       counter = counter + 1
     
     self.dataset.output()
+    self.dataset.sync_fpm()

@@ -29,7 +29,7 @@ class CompanyParser(DefaultParser):
                 return None
             url = nodes[0]
             id = re.search(r'\d+', url).group()
-            data.set('id', id)
+            data.set('refid', id)
         except Exception as e:
             print(str(e))
         return [data]
