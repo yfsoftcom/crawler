@@ -16,11 +16,13 @@ class Dataset(object):
         if data is None:
             return
         class_name = data.get_class_name()
-        id = data.get('refid')
         datas = self.get_datas(class_name)
-        if id in datas.keys():
+        
+        if data.has_ref_id():
+            id = data.get('refid')
             datas[id].update(data)
         else:
+            id = data.get('id')
             datas[id] = data
         
         self.datas[class_name] = datas

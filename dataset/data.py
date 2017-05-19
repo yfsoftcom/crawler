@@ -2,22 +2,22 @@
 #!/usr/bin/env python
 # import string
 import json
+import copy
 class Data(object):
 
     def __init__(self, className, data = {}):
         self._class_name = className
-        self._data = data
+        self._data = copy.deepcopy(data)
+
 
     def get_class_name(self):
         return self._class_name
 
     def get(self, key):
-        if key == 'refid':
-            if 'refid' in self._data:
-                return self._data[key]
-            else:
-                return self._data['id']
         return self._data[key]
+
+    def has_ref_id(self):
+        return 'refid' in self.keys()
 
     def set(self, key, val):
         self._data[key] = val
@@ -38,11 +38,10 @@ class Data(object):
         return json.dumps(self._data, ensure_ascii = False)
         
     def __eq__(self, another):
-        return self.get('refid') == another.get('refid') and self.get_class_name() == another.get_class_name()
-
+        return self.get('id') == another.get('id') and self.get_class_name() == another.get_class_name()
 
 class DataEncoder(json.JSONEncoder):
     def default(self, obj):  
         if isinstance(obj, Data):  
             return obj.__str__()  
-        return json.JSONEncoder.default(self, obj)  
+        return json.JSONEncoder.default(self, obj)

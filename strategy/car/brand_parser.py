@@ -1,12 +1,8 @@
 from lxml import etree
 from dataset.data import Data
-from strategy.parser.default_parser import DefaultParser
+from strategy.car.car_parser import CarParser
 import re
-class BrandParser(DefaultParser):
-    def __init__(self):
-        self._page = 1
-        self.is_html = False
-
+class BrandParser(CarParser):
     def _get_new_data(self, dom):
         new_datas = []
         try:
@@ -27,3 +23,9 @@ class BrandParser(DefaultParser):
         except Exception as e:
             print(str(e))
         return new_urls
+
+########
+#  brand
+#  {"bfirstletter": "D", "id": 1, "name": "大众"},
+#
+########
