@@ -16,6 +16,12 @@ if __name__ == '__main__':
 
     # sdk.cn
     
-    spider.set_domain('sdk.cn')
-    spider.set_entry('https://www.sdk.cn/datas?category_id=100100')
+    # spider.set_domain('sdk.cn')
+    # spider.set_entry('https://www.sdk.cn/datas?category_id=100100')
+    # spider.run()
+
+    # autohome.com.cn
+
+    spider.set_domain('www.autohome.com.cn')
+    spider.set_entry('http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=1')
     spider.run()

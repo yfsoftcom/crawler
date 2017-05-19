@@ -4,14 +4,19 @@
 import json
 class Data(object):
 
-    def __init__(self, className):
+    def __init__(self, className, data = {}):
         self._class_name = className
-        self._data = {}
+        self._data = data
 
     def get_class_name(self):
         return self._class_name
 
     def get(self, key):
+        if key == 'refid':
+            if 'refid' in self._data:
+                return self._data[key]
+            else:
+                return self._data['id']
         return self._data[key]
 
     def set(self, key, val):
@@ -34,3 +39,10 @@ class Data(object):
         
     def __eq__(self, another):
         return self.get('refid') == another.get('refid') and self.get_class_name() == another.get_class_name()
+
+
+class DataEncoder(json.JSONEncoder):
+    def default(self, obj):  
+        if isinstance(obj, Data):  
+            return obj.__str__()  
+        return json.JSONEncoder.default(self, obj)  

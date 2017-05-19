@@ -24,14 +24,19 @@ class BaseSpider(object):
     while url_mgr.has_next():
       url = url_mgr.next()
       parser = self.strategy.get_parser(url)
-      new_urls, new_datas, next_page = parser.parse(url)
-      url_mgr.add(next_page)
-      url_mgr.add_all(new_urls)
-      self.dataset.add_all(new_datas)
+      try:
+        new_urls, new_datas, next_page = parser.parse(url)
+        url_mgr.add(next_page)
+        url_mgr.add_all(new_urls)
+        self.dataset.add_all(new_datas)
 
-      if counter > 500: 
-        break
-      counter = counter + 1
+        if counter > 5000: 
+          break
+        counter = counter + 1
+      except Exception as e:
+        print(str(e))
+        continue
     
     self.dataset.output()
-    self.dataset.sync_fpm()
+    self.dataset.store()
+    # self.dataset.sync_fpm()

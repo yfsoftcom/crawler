@@ -1,4 +1,5 @@
 from lxml import etree
+import json
 from dataset.data import Data
 from downloader.downloader import Downloader
 import re
@@ -6,8 +7,10 @@ import re
 downloader = Downloader()
 
 class DefaultParser(object):
-    def __init__(self):
+    def __init__(self, is_html = True):
         self._page = 1
+        self.is_html = is_html
+        self._url = None
     
     def _get_new_urls(self, page_url, dom):
         return None
@@ -19,8 +22,12 @@ class DefaultParser(object):
         return None
 
     def parse(self, url):
+        self._url = url
         html = downloader.download(url)
-        dom = etree.HTML(html)
+        if self.is_html:
+            dom = etree.HTML(html)
+        else:
+            dom = json.loads(html)
         data = self._get_new_data(dom)
         urls = self._get_new_urls(url, dom)
         next_page = self._get_next_page_url(dom)
