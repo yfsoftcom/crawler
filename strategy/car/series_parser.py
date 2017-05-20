@@ -37,8 +37,8 @@ class SeriesParser(CarParser):
 
 ######
 # sub_series
-# {"name": "赛弗", "pid": 4, "firstletter": "S", "seriesstate": 40, "id": 6, "seriesorder": 684}
+# {"name": "sf", "pid": 4, "firstletter": "S", "seriesstate": 40, "id": 6, "seriesorder": 684}
 # series
-# {"pid": 57, "id": 3, "firstletter": "M", "name": "玛莎拉蒂"}
+# {"pid": 57, "id": 3, "firstletter": "M", "name": "mas"}
 #
 ######

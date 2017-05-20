@@ -28,6 +28,6 @@ class ModelParser(CarParser):
 
 #######
 # year
-# {"pid": 210, "id": 8192, "name": "2016款"}
+# {"pid": 210, "id": 8192, "name": "2"}
 # spec
-# {"name": "2004款 1.3L AT", "pid": 275, "maxprice": 80800, "state": 40, "minprice": 80800, "id": 18}
+# {"name": "2 1.3L AT", "pid": 275, "maxprice": 80800, "state": 40, "minprice": 80800, "id": 18}

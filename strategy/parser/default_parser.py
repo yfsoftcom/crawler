@@ -7,10 +7,11 @@ import re
 downloader = Downloader()
 
 class DefaultParser(object):
-    def __init__(self, is_html = True):
+    def __init__(self, is_html = True, data = None):
         self._page = 1
         self.is_html = is_html
         self._url = None
+        self._data = data
     
     def _get_new_urls(self, page_url, dom):
         return None
