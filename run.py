@@ -22,6 +22,11 @@ if __name__ == '__main__':
 
     # autohome.com.cn
 
-    spider.set_domain('www.autohome.com.cn')
-    spider.set_entry('http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=1')
+    # spider.set_domain('www.autohome.com.cn')
+    # spider.set_entry('http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=1')
+    # spider.run()
+
+    # ssq.wilead.com
+    spider.set_domain('ssq.wilead.com')
+    spider.set_entry('http://ssq.wilead.com/user/16.html')
     spider.run()
