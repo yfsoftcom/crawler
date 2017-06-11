@@ -5,11 +5,11 @@ class UrlManager(object):
     self.domains = {}
     self.current_domain = 'Default'
 
-  def set_domain(self, domain):
+  def set_domain(self, domain, allowed_partten = None):
     self.current_domain = domain
     if domain in self.domains.keys():
       return
-    self.domains[domain] = SingleUrlManager()
+    self.domains[domain] = SingleUrlManager(allowed_partten)
  
   def get_manager(self, domain = 'Default'):
     d = self.current_domain

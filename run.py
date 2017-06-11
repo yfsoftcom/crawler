@@ -4,10 +4,12 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+import re
 from spider.base_spider import BaseSpider
+from spider.auto_spider import AutoSpider
 
 if __name__ == '__main__':
-    spider = BaseSpider()
+    # spider = BaseSpider()
 
     # zhaopin.com
     # spider.set_domain('zhaopin.com')
@@ -27,6 +29,12 @@ if __name__ == '__main__':
     # spider.run()
 
     # ssq.wilead.com
-    spider.set_domain('ssq.wilead.com')
-    spider.set_entry('http://ssq.wilead.com/user/16.html')
+    # spider.set_domain('ssq.wilead.com')
+    # spider.set_entry('http://ssq.wilead.com/user/16.html')
+    # spider.run()
+
+
+    spider = AutoSpider()
+    spider.set_domain('https://www.sdk.cn', 'https://www.sdk.cn')
+    spider.set_entry('https://www.sdk.cn/datas?category_id=100100')
     spider.run()

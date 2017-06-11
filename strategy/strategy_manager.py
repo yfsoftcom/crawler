@@ -10,6 +10,7 @@ class StrategyManager(object):
     self.domains['sdk.cn'] = SdkcnStrategy()
     self.domains['www.autohome.com.cn'] = CarStrategy()
     self.domains['ssq.wilead.com'] = ComWileadSsqStrategy()
+    self.domains['autospider'] = AutoSpiderStrategy()
     
   def add_strategy(self, domain, strategy):
     self.domains[domain] = strategy
