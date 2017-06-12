@@ -9,7 +9,7 @@ class AutoSpiderStrategy(Strategy):
     pass
 
   def get_parser(self, url):
-    print url
+    # print url
     
     return DefaultAutoSpiderParser()
 

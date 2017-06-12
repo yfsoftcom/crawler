@@ -15,56 +15,59 @@ class DefaultAutoSpiderParser(object):
     
     def set_fields(self, fields):
         self.fields = fields
-
-    def set_allowed_partten(self, allowed_partten):
-        self.allowed_partten = allowed_partten
-    
-    def set_content_url_partten(self, content_url_partten):
-        self.content_url_partten = content_url_partten
-
-    def set_list_url_partten(self, list_url_partten):
-        self.list_url_partten = list_url_partten
-
-    def get_allowed_partten(self, dom):
-      a_nodes = dom.xpath('//a[@href]/@href')
-      if len(a_nodes) < 1:
-          return []
-      else:
-          allowed_urls = []
-          for node in a_nodes:
-              if re.match(r'^/', node) != None:
-                  node = self._domain + node
-              allowed_urls.append(node)
-          return allowed_urls
           
-    def get_domain(self):
-        return re.search(r'^((http://)|(https://))?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}(/)', self._url).group()[0:-1]
-
     def _get_new_urls(self, page_url, dom):
-
-        return self.get_allowed_partten(dom)
+        return dom.xpath('//a[@href]/@href')
 
     def _get_new_data(self, dom):
+        # if content page
+        # try:
+        #     # name
+        #     # image
+        #     titles = dom.xpath("//div[@class='box']//h2/a")
+        #     imgs = dom.xpath("//div[@class='box']//a/img[@class='logo img-rounded']")
+        #     details = dom.xpath("//div[@class='box']/a")
+        #     for i in range(0, len(titles)):
+        #         data = Data('ss_stack')
+        #         title =  titles[i].text
+        #         img = imgs[i].get('src')
+        #         detail = details[i].get('href') 
+        #         id = re.search(r'\d+', detail).group()
+        #         detail = 'https://www.sdk.cn' + detail
+        #         data.set('title', title)
+        #         data.set('imgurl', img)
+        #         data.set('detail', detail)
+        #         data.set('refid', id)
+        #         new_datas.append(data)
+        # except Exception as e:
+        #     print(str(e))
+        # return new_datas
+        data = Data('auto')
         for field in self.fields:
-            node = dom.xpath(field.xpath)
-            print node
-        return None
+            node = dom.xpath(field['xpath'])
+            if len(node) > 0:
+                node = node[0]
+            if 'filter' in field.keys():
+                m = re.compile(field['filter']).search(node)
+                if m != None:
+                    node = m.group(0)
+            data.set(field['name'], node)
+        return [ data ]
 
-    def _get_next_page_url(self, dom):
-        return None
-
-    def parse(self, url):
+    def parse(self, url, type = 'CONTENT'):
         self._url = url
-        self._domain = self.get_domain()
         html = downloader.download(url)
+        # print html
         if self.is_html:
             dom = etree.HTML(html)
         else:
             dom = json.loads(html)
-        data = self._get_new_data(dom)
+        if type is 'CONTENT':
+            data = self._get_new_data(dom)
+        else:
+            data = None
         urls = self._get_new_urls(url, dom)
-        next_page = self._get_next_page_url(dom)
-        return urls, data, next_page
+        return urls, data
 
     def _get_children_text(self, nodes):
         if len(nodes) < 1:

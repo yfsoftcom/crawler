@@ -9,7 +9,9 @@ class UrlManager(object):
     self.current_domain = domain
     if domain in self.domains.keys():
       return
-    self.domains[domain] = SingleUrlManager(allowed_partten)
+    urlManager = SingleUrlManager(allowed_partten)
+    self.domains[domain] = urlManager
+    return urlManager
  
   def get_manager(self, domain = 'Default'):
     d = self.current_domain
