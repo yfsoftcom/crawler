@@ -3,70 +3,68 @@ import json
 from dataset.data import Data
 from downloader.downloader import Downloader
 import re
-
 downloader = Downloader()
 
+ai = { u'counter': 0}
+
 class DefaultAutoSpiderParser(object):
-    def __init__(self, is_html = True, data = None):
+    def __init__(self, spider, is_html = True, data = None):
+        self._spider = spider
         self._page = 1
         self.is_html = is_html
         self._url = None
         self._data = data
-    
-    def set_fields(self, fields):
-        self.fields = fields
-          
+      
     def _get_new_urls(self, page_url, dom):
+        if 'prefix' in self._spider._range.keys():
+            return dom.xpath(self._spider._range['prefix'] + '//a[@href]/@href')
         return dom.xpath('//a[@href]/@href')
 
     def _get_new_data(self, dom):
-        # if content page
-        # try:
-        #     # name
-        #     # image
-        #     titles = dom.xpath("//div[@class='box']//h2/a")
-        #     imgs = dom.xpath("//div[@class='box']//a/img[@class='logo img-rounded']")
-        #     details = dom.xpath("//div[@class='box']/a")
-        #     for i in range(0, len(titles)):
-        #         data = Data('ss_stack')
-        #         title =  titles[i].text
-        #         img = imgs[i].get('src')
-        #         detail = details[i].get('href') 
-        #         id = re.search(r'\d+', detail).group()
-        #         detail = 'https://www.sdk.cn' + detail
-        #         data.set('title', title)
-        #         data.set('imgurl', img)
-        #         data.set('detail', detail)
-        #         data.set('refid', id)
-        #         new_datas.append(data)
-        # except Exception as e:
-        #     print(str(e))
-        # return new_datas
-        data = Data('auto')
-        for field in self.fields:
-            node = dom.xpath(field['xpath'])
-            if len(node) > 0:
-                node = node[0]
-            if 'filter' in field.keys():
-                m = re.compile(field['filter']).search(node)
-                if m != None:
-                    node = m.group(0)
-            data.set(field['name'], node)
+        data = Data(self._spider._id)
+        data.set('refurl' , self._url)
+        for field in self._spider._fields:
+            value = self.get_value(field, dom)
+            data.set(field['name'], value)
         return [ data ]
+
+    def get_value(self, field, dom):
+        if field['type'] == 'ai':
+            ai['counter'] = ai['counter'] + 1
+            return ai['counter']
+
+        node = dom.xpath(field['xpath'])
+        if field['type'] == 'string':
+            if len(node) > 0:
+                value = node[0]
+            if 'filter' in field.keys():
+                m = re.compile(field['filter']).search(value)
+                if m != None:
+                    value = m.group(0)
+            return value
+        
+        if field['type'] == 'xml':
+            if len(node) > 0:
+                value = node[0]
+            value = etree.tostring(value, encoding='utf8')
+            value = self._remove_white_space(value)
+            return value
+
 
     def parse(self, url, type = 'CONTENT'):
         self._url = url
         html = downloader.download(url)
-        # print html
         if self.is_html:
             dom = etree.HTML(html)
         else:
             dom = json.loads(html)
+
         if type is 'CONTENT':
             data = self._get_new_data(dom)
+            urls = None
         else:
             data = None
-        urls = self._get_new_urls(url, dom)
+            urls = self._get_new_urls(url, dom)
         return urls, data
 
     def _get_children_text(self, nodes):

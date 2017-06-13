@@ -1,0 +1,34 @@
+{
+  "id": "zhaopin",
+  "domain": "http://sou.zhaopin.com",
+  "max": "200",
+  "allowed_url": "^http://sou.zhaopin.com/jobs/searchresult.ashx",
+  "content_url": "^http://jobs.zhaopin.com/\\d+.htm",
+  "fields":[ 
+    { 
+      "name": "title", 
+      "xpath": "/html/body/div[5]/div[1]/div[1]/h1/text()" ,
+      "type": "string"
+    },
+    { 
+      "name": "company", 
+      "xpath": "/html/body/div[5]/div[1]/div[1]/h2/a/text()" ,
+      "type": "string"
+    },
+    { 
+      "name": "id", 
+      "xpath": "/html/head/link[@rel='canonical']/@href", 
+      "filter": "\\d+" ,
+      "type": "string"
+    },
+    { 
+      "name": "refurl", 
+      "xpath": "/html/head/link[@rel='canonical']/@href" ,
+      "type": "string"
+    }
+  ],
+  "entry": "http://sou.zhaopin.com/jobs/searchresult.ashx?bj=160000&in=210500%3B160400%3B160000%3B300100%3B160100%3B160600&jl=%E6%89%AC%E5%B7%9E&p=1&isadv=0",
+  "range": {
+    "prefix": "/html/body//div[@class='newlist_wrap fl']"
+  }
+}

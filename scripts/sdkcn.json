@@ -1,0 +1,24 @@
+{
+  "id": "sdkcn",
+  "domain": "https://sdk.cn",
+  "max": "200",
+  "allowed_url": "^https://sdk.cn/datas\\?category_id=100100",
+  "content_url": "^https://sdk.cn/datas/\\d+",
+  "fields":[ 
+    { 
+      "name": "title", 
+      "xpath": "//*[@id='data-view']/header/div[1]/div[2]/h1/text()" ,
+      "type": "string"
+    },
+    { 
+      "name": "id", 
+      "xpath": "//*[@id='relation-0']/@target_id", 
+      "filter": "\\d+" ,
+      "type": "string"
+    }
+  ],
+  "entry": "https://sdk.cn/datas?category_id=100100",
+  "range": {
+    "prefix": "/html"
+  }
+}

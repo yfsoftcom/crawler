@@ -1,0 +1,32 @@
+{
+  "id": "ssq",
+  "domain": "http://ssq.wilead.com",
+  "max": 2,
+  "allowed_url": "^http://ssq.wilead.com/user/\\d*.html",
+  "content_url": "^http://ssq.wilead.com/post/\\d*.html",
+  "fields":[ 
+    { 
+      "name": "id", 
+      "type": "ai"
+    },
+    { 
+      "name": "title", 
+      "xpath": "//*[@id='article']/h1/text()", 
+      "type": "string"
+    },
+    { 
+      "name": "content", 
+      "xpath": "//article//section[1]", 
+      "type": "xml"
+    },
+    { 
+      "name": "detail", 
+      "xpath": "//article//section[2]", 
+      "type": "xml"
+    }
+  ],
+  "entry": "http://ssq.wilead.com/user/16.html",
+  "range": {
+    "prefix": "/html"
+  }
+}
