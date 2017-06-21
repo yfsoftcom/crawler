@@ -33,6 +33,10 @@ class DefaultAutoSpiderParser(object):
             ai['counter'] = ai['counter'] + 1
             return ai['counter']
 
+        # TODO download the image
+        if field['type'] == 'img':
+            return ''
+
         node = dom.xpath(field['xpath'])
         if field['type'] == 'string':
             if len(node) > 0:
