@@ -1,0 +1,29 @@
+{
+  "id": "taobao",
+  "domain": "https://bobbydz168.taobao.com",
+  "max": "100",
+  "allowed_url":"^(https://(item|detail|bobbydz168).(taobao|tmall).com/item.htm*)|(https://bobbydz168.(taobao|tmall).com)",
+  "content_url":"^https://(item|detail|bobbydz168).(taobao|tmall).com/item.htm*",
+  "encoding": "gbk",
+  "fields":[ 
+    { 
+      "name": "title", 
+      "xpath": "//h3[@class='tb-main-title']/@data-title" ,
+      "type": "string"
+    },
+    { 
+      "name": "id", 
+      "xpath": "//input[@name='item_id']/@value",
+      "type": "string"
+    },
+    { 
+      "name": "images", 
+      "xpath": "//ul[@class='tb-thumb tb-clearfix']//a//img/@data-src",
+      "type": "list"
+    }
+  ],
+  "entry": "https://bobbydz168.taobao.com",
+  "range": {
+    "prefix": "/html"
+  }
+}

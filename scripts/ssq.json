@@ -4,6 +4,7 @@
   "max": 2,
   "allowed_url": "^http://ssq.wilead.com/user/\\d*.html",
   "content_url": "^http://ssq.wilead.com/post/\\d*.html",
+  "encoding": "utf-8",
   "fields":[ 
     { 
       "name": "id", 

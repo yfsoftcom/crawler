@@ -8,10 +8,10 @@ class AutoSpiderStrategy(Strategy):
   def __init__(self, spider = None):
     self._spider = spider
 
-  def get_parser(self, url):
+  def get_parser(self, url, is_html = True, data = None, encoding = 'utf-8'):
     # print url
     
-    return DefaultAutoSpiderParser(self._spider)
+    return DefaultAutoSpiderParser(self._spider, encoding = encoding)
 
   def _filter(self, input):
     return True

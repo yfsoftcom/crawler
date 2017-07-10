@@ -13,6 +13,7 @@ class AutoSpider(object):
     self._range = {}
     self._id = 'default'
     self._max = 100
+    self._encoding = 'utf-8'
   
   def set_max(self, max):
     self._max = int(max)
@@ -35,6 +36,9 @@ class AutoSpider(object):
   def set_fields(self, fields):
     self._fields = fields
 
+  def set_encoding(self, encoding):
+    self._encoding = encoding
+
   def set_list_url_partten(self, partten):
     self.partten_list_url = partten
     self._allowed_partten['LIST'] = partten
@@ -53,16 +57,14 @@ class AutoSpider(object):
     while url_mgr.has_next():
       url = url_mgr.next()
       print url
-      parser = self.strategy.get_parser(url)
+      parser = self.strategy.get_parser(url, encoding = self._encoding)
       type = 'LIST'
       if url_mgr.is_content(url):
         type = 'CONTENT'
       try:
         new_urls, new_datas = parser.parse(url, type)
         self.dataset.add_all(new_datas)
-        # print 'new urls', new_urls
         url_mgr.add_all(new_urls, url)
-        
         #  counter content data
         if type == 'CONTENT':
           counter = counter + 1

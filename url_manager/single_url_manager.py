@@ -18,11 +18,16 @@ class SingleUrlManager(object):
   def get_domain(self, current_url):
     return re.search(r'^((http://)|(https://))?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}(/)', current_url).group()[0:-1]
 
+  def get_protocal(self, current_url):
+    return re.search(r'^((http://)|(https://))?', current_url).group()[0:-2]
+
   def get_full_url(self, url, current_url):
     # concat the domain from the current_url
     if current_url is None:
       return url
-    if re.match(r'^/', url) != None:
+    if re.match(r'^//', url) != None:
+      return self.get_protocal(current_url) + url
+    if re.match(r'^/+', url) != None:
       return self.get_domain(current_url) + url
     return url
 

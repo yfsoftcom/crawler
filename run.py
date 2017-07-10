@@ -69,6 +69,8 @@ if __name__ == '__main__':
 
     spider.set_max(script['max'])
 
+    spider.set_encoding(script['encoding'])
+
     spider.set_content_url_partten(script['content_url'])
 
     spider.set_fields(script['fields'])

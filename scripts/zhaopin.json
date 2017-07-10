@@ -4,6 +4,7 @@
   "max": "200",
   "allowed_url": "^http://sou.zhaopin.com/jobs/searchresult.ashx",
   "content_url": "^http://jobs.zhaopin.com/\\d+.htm",
+  "encoding": "utf-8",
   "fields":[ 
     { 
       "name": "title", 

@@ -8,12 +8,13 @@ downloader = Downloader()
 ai = { u'counter': 0}
 
 class DefaultAutoSpiderParser(object):
-    def __init__(self, spider, is_html = True, data = None):
+    def __init__(self, spider, is_html = True, data = None, encoding = 'utf-8'):
         self._spider = spider
         self._page = 1
         self.is_html = is_html
         self._url = None
         self._data = data
+        self._encoding = encoding
       
     def _get_new_urls(self, page_url, dom):
         if 'prefix' in self._spider._range.keys():
@@ -46,6 +47,9 @@ class DefaultAutoSpiderParser(object):
                 if m != None:
                     value = m.group(0)
             return value
+
+        if field['type'] == 'list':
+            return node
         
         if field['type'] == 'xml':
             if len(node) > 0:
@@ -57,7 +61,7 @@ class DefaultAutoSpiderParser(object):
 
     def parse(self, url, type = 'CONTENT'):
         self._url = url
-        html = downloader.download(url)
+        html = downloader.download(url, self._encoding)
         if self.is_html:
             dom = etree.HTML(html)
         else:
